@@ -3,5 +3,8 @@
   "uuid": "03caa18d-d872-48f0-bdca-3e9160ef253f",
   "creator": {
     "version": "3.8.6"
+  },
+  "dependencies": {
+    "JumpingBlock": "file:"
   }
 }
