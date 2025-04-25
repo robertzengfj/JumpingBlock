@@ -1,9 +1,14 @@
 import { _decorator, Component, Node, Prefab, instantiate } from 'cc';
+import { PlayerController } from './PlayerController';
 const { ccclass, property } = _decorator;
 
 enum BlockType {
     BT_NONE,
     BT_WHITE
+}
+enum GameState{
+    GS_MENU,
+    GS_PLAYING,
 }
 
 @ccclass('GameManager')
@@ -13,9 +18,21 @@ export class GameManager extends Component {
     @property()
     public roadLength = 50;
     private _road: BlockType[] = [];
+    @property(PlayerController)
+    public playerController: PlayerController = null;
+
+    setCurState(value: GameState) {
+       if(value== GameState.GS_MENU){
+        this.generateRoad();
+        this.playerController.setIsCanControll(false)
+       }else if(value== GameState.GS_PLAYING){
+        this.playerController.setIsCanControll(true)
+       }
+
+    }
 
     start() {
-        this.generateRoad();
+      this.setCurState(GameState.GS_MENU)
     }
 
     update(deltaTime: number) {

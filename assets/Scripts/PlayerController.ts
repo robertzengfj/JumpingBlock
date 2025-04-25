@@ -12,7 +12,14 @@ export class PlayerController extends Component {
     @property(Animation)
     public bodyAnim: Animation = null
     start() {
-        input.on(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
+        //input.on(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
+    }
+    public setIsCanControll(value:boolean){
+        if(value){
+            input.on(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
+        }else{
+            input.off(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
+        }
     }
     onMouseDown(event: EventMouse) {
         console.log(event.getButton())
