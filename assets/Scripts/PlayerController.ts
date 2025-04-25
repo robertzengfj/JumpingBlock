@@ -11,6 +11,9 @@ export class PlayerController extends Component {
     private _curPos = new Vec3()
     @property(Animation)
     public bodyAnim: Animation = null
+    
+   private _curTotalstep:number=0
+
     start() {
         //input.on(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
     }
@@ -53,7 +56,7 @@ export class PlayerController extends Component {
         //     this.bodyAnim.play("JumpTwoStep")
         //    }
         this.bodyAnim.play(animName)
-
+        this._curTotalstep+=step
     }
 
     update(dt: number) {
@@ -63,6 +66,7 @@ export class PlayerController extends Component {
                 console.log("stop jump:" + this._startJump)
                 this._startJump = false
                 this.node.setPosition(this._targetPos)
+                this.node.emit("JumpEnd",this._curTotalstep)
             } else {
                 // }else{
                 const curPos = this.node.position
@@ -74,6 +78,10 @@ export class PlayerController extends Component {
     protected onDestroy(): void {
         input.off(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
 
+    }
+    public reset(){
+        this.node.setPosition(0,0,0)
+        this._curTotalstep=0
     }
 }
 
